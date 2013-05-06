@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dart.crypto;
+part of mycrypto;
 
 // Constants.
 const _MASK_8 = 0xff;
@@ -24,7 +24,8 @@ int _rotl32(int val, int shift) {
 abstract class _HashBase implements Hash {
   _HashBase(int this._chunkSizeInWords,
             int this._digestSizeInWords,
-            bool this._bigEndianWords)
+            bool this._bigEndianWords,
+            int this._resultLengthInWords)
       : _pendingData = [] {
     _currentChunk = new List(_chunkSizeInWords);
     _h = new List(_digestSizeInWords);
@@ -70,9 +71,10 @@ abstract class _HashBase implements Hash {
 
   // Compute the final result as a list of bytes from the hash words.
   _resultAsBytes() {
-    var result = [];
-    for (var i = 0; i < _h.length; i++) {
-      result.addAll(_wordToBytes(_h[i]));
+    var result = new List(_resultLengthInWords * _BYTES_PER_WORD);
+    for (var i = 0; i < _resultLengthInWords; i++) {
+      int start = i * _BYTES_PER_WORD;
+      result.setRange(start, start+_BYTES_PER_WORD, _wordToBytes(_h[i]));
     }
     return result;
   }
@@ -147,6 +149,7 @@ abstract class _HashBase implements Hash {
   final int _digestSizeInWords;
   final bool _bigEndianWords;
   int _lengthInBytes = 0;
+  final int _resultLengthInWords;
   List<int> _pendingData;
   List<int> _currentChunk;
   List<int> _h;

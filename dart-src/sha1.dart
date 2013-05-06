@@ -2,12 +2,12 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dart.crypto;
+part of mycrypto;
 
 // The SHA1 hasher is used to compute an SHA1 message digest.
 class _SHA1 extends _HashBase implements SHA1 {
   // Construct a SHA1 hasher object.
-  _SHA1() : _w = new List(80), super(16, 5, true) {
+  _SHA1() : _w = new List(80), super(16, 5, true, 5) {
     _h[0] = 0x67452301;
     _h[1] = 0xEFCDAB89;
     _h[2] = 0x98BADCFE;

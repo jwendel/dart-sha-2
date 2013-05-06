@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-library dart.crypto;
+library mycrypto;
 
 import 'dart:math';
 
@@ -11,7 +11,7 @@ part 'hash_utils.dart';
 part 'hmac.dart';
 part 'md5.dart';
 part 'sha1.dart';
-part 'sha256.dart';
+part 'sha2.dart';
 
 /**
  * Interface for cryptographic hash functions.
@@ -65,6 +65,13 @@ abstract class SHA1 implements Hash {
  */
 abstract class SHA256 implements Hash {
   factory SHA256() => new _SHA256();
+}
+
+/**
+ * SHA224 hash function implementation.
+ */
+abstract class SHA224 implements Hash {
+  factory SHA224() => new _SHA224();
 }
 
 /**

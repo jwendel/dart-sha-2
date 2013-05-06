@@ -2,29 +2,24 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dart.crypto;
+part of mycrypto;
 
-// The SHA256 hasher is used to compute an SHA256 message digest.
-class _SHA256 extends _HashBase implements SHA256 {
-  // Construct a SHA256 hasher object.
-  _SHA256() : _w = new List(64), super(16, 8, true) {
-    // Initial value of the hash parts. First 32 bits of the fractional parts
-    // of the square roots of the first 8 prime numbers.
-    _h[0] = 0x6a09e667;
-    _h[1] = 0xbb67ae85;
-    _h[2] = 0x3c6ef372;
-    _h[3] = 0xa54ff53a;
-    _h[4] = 0x510e527f;
-    _h[5] = 0x9b05688c;
-    _h[6] = 0x1f83d9ab;
-    _h[7] = 0x5be0cd19;
-  }
 
-  // Returns a new instance of this Hash.
-  SHA256 newInstance() {
-    return new SHA256();
-  }
+abstract class _SHA2Base extends _HashBase {
+  _SHA2Base(int resultLengthInWords) : _w = new List(64), super(16, 8, true, resultLengthInWords);
+  
+  // Helper functions as defined in http://tools.ietf.org/html/rfc6234
+  _rotr32(n, x) => (x >> n) | ((x << (32 - n)) & _MASK_32);
+  _ch(x, y, z) => (x & y) ^ ((~x & _MASK_32) & z);
+  _maj(x, y, z) => (x & y) ^ (x & z) ^ (y & z);
+  
+  List<int> _w;
+}
 
+abstract class _SHA224_256Base extends _SHA2Base {
+  
+  _SHA224_256Base(int resultLengthInWords) : super(resultLengthInWords);
+  
   // Table of round constants. First 32 bits of the fractional
   // parts of the cube roots of the first 64 prime numbers.
   static const List<int> _K =
@@ -41,16 +36,13 @@ class _SHA256 extends _HashBase implements SHA256 {
               0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
               0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
               0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2 ];
-
+  
   // Helper functions as defined in http://tools.ietf.org/html/rfc6234
-  _rotr32(n, x) => (x >> n) | ((x << (32 - n)) & _MASK_32);
-  _ch(x, y, z) => (x & y) ^ ((~x & _MASK_32) & z);
-  _maj(x, y, z) => (x & y) ^ (x & z) ^ (y & z);
   _bsig0(x) => _rotr32(2, x) ^ _rotr32(13, x) ^ _rotr32(22, x);
   _bsig1(x) => _rotr32(6, x) ^ _rotr32(11, x) ^ _rotr32(25, x);
   _ssig0(x) => _rotr32(7, x) ^ _rotr32(18, x) ^ (x >> 3);
   _ssig1(x) => _rotr32(17, x) ^ _rotr32(19, x) ^ (x >> 10);
-
+  
   // Compute one iteration of the SHA256 algorithm with a chunk of
   // 16 32-bit pieces.
   void _updateHash(List<int> M) {
@@ -100,6 +92,47 @@ class _SHA256 extends _HashBase implements SHA256 {
     _h[6] = _add32(g, _h[6]);
     _h[7] = _add32(h, _h[7]);
   }
-
-  List<int> _w;
 }
+
+class _SHA256 extends _SHA224_256Base implements SHA256 {
+
+  _SHA256() : super(8) {
+    // Initial value of the hash parts. First 32 bits of the fractional parts
+    // of the square roots of the first 8 prime numbers.
+    _h[0] = 0x6a09e667;
+    _h[1] = 0xbb67ae85;
+    _h[2] = 0x3c6ef372;
+    _h[3] = 0xa54ff53a;
+    _h[4] = 0x510e527f;
+    _h[5] = 0x9b05688c;
+    _h[6] = 0x1f83d9ab;
+    _h[7] = 0x5be0cd19;
+  }
+  
+  // Returns a new instance of this Hash.
+  SHA256 newInstance() {
+    return new SHA256();
+  }
+}
+
+class _SHA224 extends _SHA224_256Base implements SHA224 {
+
+  _SHA224() : super(7) {
+    // Initial value of the hash parts. First 32 bits of the fractional parts
+    // of the square roots of the first 8 prime numbers.
+    _h[0] = 0xc1059ed8;
+    _h[1] = 0x367cd507;
+    _h[2] = 0x3070dd17;
+    _h[3] = 0xf70e5939;
+    _h[4] = 0xffc00b31;
+    _h[5] = 0x68581511;
+    _h[6] = 0x64f98fa7;
+    _h[7] = 0xbefa4fa4;
+  }
+  
+  // Returns a new instance of this Hash.
+  SHA224 newInstance() {
+    return new SHA224();
+  }
+}
+
