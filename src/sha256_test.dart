@@ -281,23 +281,7 @@ void test() {
 
   for (var i = 0; i < expected_values.length; i++) {
     var hash = new SHA256();
-    List l = createTestArr(i);
-    
-    String name = i.toString();
-    if (i < 10) 
-      name = "00" + name;
-    else if (i < 100) {
-      name = "0" + name;
-    }
-    
-    File f = new File("src\\test\\s-" + name);
-    IOSink io = f.openWrite();
-    io.add(l);
-    io.close();
-    
-    
-    
-    hash.add(l);
+    hash.add(createTestArr(i));
     var d = hash.close();
     Expect.equals(expected_values[i], CryptoUtils.bytesToHex(d), '$i');
   }
@@ -320,7 +304,6 @@ void testStandardVectors(inputs, mds) {
     var hash = new SHA256();
     hash.add(inputs[i]);
     var d = hash.close();
-    print(CryptoUtils.bytesToHex(d));
     Expect.equals(mds[i], CryptoUtils.bytesToHex(d), '$i');
   }
 }
@@ -331,13 +314,5 @@ void main() {
   testRepeatedDigest();
   testStandardVectors(sha256_long_inputs, sha256_long_mds);
   testStandardVectors(sha256_short_inputs, sha256_short_mds);
-  
-  List a = new List.from(sha256_short_inputs);
-  a.addAll(sha256_long_inputs);
-  
-  for (int i=0; i < a.length; i++) {
-
-  }
-    
 }
 
