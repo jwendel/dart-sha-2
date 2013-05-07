@@ -61,6 +61,13 @@ abstract class SHA1 implements Hash {
 }
 
 /**
+ * SHA224 hash function implementation.
+ */
+abstract class SHA224 implements Hash {
+  factory SHA224() => new _SHA224();
+}
+
+/**
  * SHA256 hash function implementation.
  */
 abstract class SHA256 implements Hash {
@@ -70,9 +77,17 @@ abstract class SHA256 implements Hash {
 /**
  * SHA224 hash function implementation.
  */
-abstract class SHA224 implements Hash {
-  factory SHA224() => new _SHA224();
+abstract class SHA384 implements Hash {
+  factory SHA384() => new _SHA384();
 }
+
+/**
+ * SHA224 hash function implementation.
+ */
+abstract class SHA512 implements Hash {
+  factory SHA512() => new _SHA512();
+}
+
 
 /**
  * MD5 hash function implementation.

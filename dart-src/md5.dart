@@ -5,7 +5,7 @@
 part of mycrypto;
 
 // The MD5 hasher is used to compute an MD5 message digest.
-class _MD5 extends _HashBase implements MD5 {
+class _MD5 extends _Hash32Base implements MD5 {
   _MD5() : super(16, 4, false, 4) {
     _h[0] = 0x67452301;
     _h[1] = 0xefcdab89;
