@@ -8,7 +8,7 @@ part of mycrypto;
 abstract class _SHA224_256Base extends _Hash32Base {
   
   _SHA224_256Base(int resultLengthInWords) 
-    : _w = new List(16 * _BYTES_PER_32_WORD), super(16, 8, true, resultLengthInWords);
+    : _w = new List(16 * _BYTES_PER_WORD_32), super(16, 8, true, resultLengthInWords);
   
   // Table of round constants. First 32 bits of the fractional
   // parts of the cube roots of the first 64 prime numbers.
@@ -136,10 +136,10 @@ class _SHA224 extends _SHA224_256Base implements SHA224 {
 abstract class _SHA384_512Base extends _Hash64Base {
   
   _SHA384_512Base(int resultLengthInWords) 
-      : _w = new List(16 * _BYTES_PER_64_WORD), super(16, 8, resultLengthInWords);
+      : _w = new List(16 * _BYTES_PER_WORD_64), super(16, 8, resultLengthInWords);
   
-  // Table of round constants. First 32 bits of the fractional
-  // parts of the cube roots of the first 64 prime numbers.
+  // Table of round constants. First 64 bits of the fractional
+  // parts of the cube roots of the first 80 prime numbers.
   static const List<int> _K =
       const [ 
               0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
