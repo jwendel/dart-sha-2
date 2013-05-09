@@ -313,7 +313,7 @@ void main() {
   test();
   testInvalidUse();
   testRepeatedDigest();
-  testStandardVectors(sha224_short_inputs, sha224_short_mds);
   testStandardVectors(sha224_long_inputs, sha224_long_mds);
+  testStandardVectors(sha224_short_inputs, sha224_short_mds);
 }
 
