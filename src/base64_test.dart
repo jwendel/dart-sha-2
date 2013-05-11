@@ -5,8 +5,8 @@
 // Library tag to allow the test to run on Dartium.
 library base64_test;
 
-import "../lib/expect.dart";
-import '../dart-src/crypto.dart';
+import "package:expect/expect.dart";
+import 'dart:crypto';
 import 'dart:math';
 
 // Data from http://tools.ietf.org/html/rfc4648.

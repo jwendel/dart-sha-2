@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of crypto;
+part of dart.crypto;
 
 
 abstract class _SHA224_256Base extends _Hash32Base {
@@ -26,7 +26,7 @@ abstract class _SHA224_256Base extends _Hash32Base {
               0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f,
               0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
               0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2 ];
-  
+
   // Helper functions as defined in http://tools.ietf.org/html/rfc6234
   _rotr32(n, x) => (x >> n) | ((x << (32 - n)) & _MASK_32);
   _ch(x, y, z) => (x & y) ^ ((~x & _MASK_32) & z);
@@ -35,7 +35,7 @@ abstract class _SHA224_256Base extends _Hash32Base {
   _bsig1(x) => _rotr32(6, x) ^ _rotr32(11, x) ^ _rotr32(25, x);
   _ssig0(x) => _rotr32(7, x) ^ _rotr32(18, x) ^ (x >> 3);
   _ssig1(x) => _rotr32(17, x) ^ _rotr32(19, x) ^ (x >> 10);
-  
+
   // Compute one iteration of the SHA256 algorithm with a chunk of
   // 16 32-bit pieces.
   void _updateHash(List<int> M) {

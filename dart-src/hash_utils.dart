@@ -2,16 +2,16 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of crypto;
+part of dart.crypto;
 
 // Constants.
 const _MASK_8 = 0xff;
+const _MASK_32 = 0xffffffff;
+const _MASK_64 = 0xffffffffffffffff;
 const _BITS_PER_BYTE = 8;
 const _BYTES_PER_WORD_32 = 4;
 const _BYTES_PER_WORD_64 = 8;
 
-const _MASK_32 = 0xffffffff;
-const _MASK_64 = 0xffffffffffffffff;
 
 // Helper functions used by more than one hasher.
 

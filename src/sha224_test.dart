@@ -5,8 +5,8 @@
 // Library tag to allow Dartium to run the tests.
 library sha224_test;
 
-import "../lib/expect.dart";
-import '../dart-src/crypto.dart';
+import "package:expect/expect.dart";
+import 'dart:crypto';
 import 'dart:io';
 
 part 'sha224_long_test_vectors.dart';

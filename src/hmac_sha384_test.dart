@@ -5,8 +5,8 @@
 // Library tag to allow the test to run on Dartium.
 library hmac_sha384_test;
 
-import "../lib/expect.dart";
-import '../dart-src/crypto.dart';
+import "package:expect/expect.dart";
+import 'dart:crypto';
 
 part 'hmac_sha384_test_vectors.dart';
 

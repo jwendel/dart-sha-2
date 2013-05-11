@@ -12,6 +12,6 @@
     'hmac.dart',
     'md5.dart',
     'sha1.dart',
-    'sha256.dart',
+    'sha2.dart',
   ],
 }

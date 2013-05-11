@@ -5,8 +5,8 @@
 // Library tag to allow the test to run on Dartium.
 library hmac_md5_test;
 
-import "../lib/expect.dart";
-import '../dart-src/crypto.dart';
+import "package:expect/expect.dart";
+import 'dart:crypto';
 
 // Data from http://tools.ietf.org/html/rfc2202.
 var hmac_md5_inputs =
