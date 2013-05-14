@@ -1,6 +1,7 @@
 name:  sample_pubspec
 description:  A sample application
 
-#dependencies:
-#  js: any
+dependencies:
+  expect: 
+    path: expect\
 #  unittest: any
