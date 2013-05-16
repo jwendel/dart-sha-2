@@ -75,14 +75,14 @@ abstract class SHA256 implements Hash {
 }
 
 /**
- * SHA224 hash function implementation.
+ * SHA384 hash function implementation.
  */
 abstract class SHA384 implements Hash {
   factory SHA384() => new _SHA384();
 }
 
 /**
- * SHA224 hash function implementation.
+ * SHA512 hash function implementation.
  */
 abstract class SHA512 implements Hash {
   factory SHA512() => new _SHA512();

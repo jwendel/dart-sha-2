@@ -74,17 +74,17 @@ abstract class _Hash32Base implements Hash {
 
   // Compute the final result as a list of bytes from the hash words.
   _resultAsBytes() {
-    var result = new List(_resultLengthInWords * _BYTES_PER_WORD_32);
-    for (var i = 0; i < _resultLengthInWords; i++) {
-      int start = i * _BYTES_PER_WORD_32;
-      result.setRange(start, start+_BYTES_PER_WORD_32, _wordToBytes(_h[i]));
+    var result = [];
+    for (var i = 0; i < _h.length; i++) {
+      result.addAll(_wordToBytes(_h[i]));
     }
     return result;
   }
-
+  
   // Converts a list of bytes to a chunk of 32-bit words.
   _bytesToChunk(List<int> data, int dataIndex) {
-    assert((data.length - dataIndex) >= (_chunkSizeInWords * _BYTES_PER_WORD_32));
+    assert(
+        (data.length - dataIndex) >= (_chunkSizeInWords * _BYTES_PER_WORD_32));
 
     for (var wordIndex = 0; wordIndex < _chunkSizeInWords; wordIndex++) {
       var w3 = _bigEndianWords ? data[dataIndex] : data[dataIndex + 3];
@@ -92,7 +92,7 @@ abstract class _Hash32Base implements Hash {
       var w1 = _bigEndianWords ? data[dataIndex + 2] : data[dataIndex + 1];
       var w0 = _bigEndianWords ? data[dataIndex + 3] : data[dataIndex];
       dataIndex += 4;
-      var word = (w3 & 0xff) << 24;
+      var word = (w3 & _MASK_8) << 24;
       word |= (w2 & _MASK_8) << 16;
       word |= (w1 & _MASK_8) << 8;
       word |= (w0 & _MASK_8);
@@ -209,17 +209,17 @@ abstract class _Hash64Base implements Hash {
 
   // Compute the final result as a list of bytes from the hash words.
   _resultAsBytes() {
-    var result = new List(_resultLengthInWords * _BYTES_PER_WORD_64);
-    for (var i = 0; i < _resultLengthInWords; i++) {
-      int start = i * _BYTES_PER_WORD_64;
-      result.setRange(start, start+_BYTES_PER_WORD_64, _wordToBytes(_h[i]));
+    var result = [];
+    for (var i = 0; i < _h.length; i++) {
+      result.addAll(_wordToBytes(_h[i]));
     }
     return result;
   }
-
+  
   // Converts a list of bytes to a chunk of 64-bit words.
   _bytesToChunk(List<int> data, int dataIndex) {
-    assert((data.length - dataIndex) >= (_chunkSizeInWords * _BYTES_PER_WORD_64));
+    assert(
+        (data.length - dataIndex) >= (_chunkSizeInWords * _BYTES_PER_WORD_64));
 
     for (var wordIndex = 0; wordIndex < _chunkSizeInWords; wordIndex++) {
       var w7 = data[dataIndex];
@@ -231,7 +231,7 @@ abstract class _Hash64Base implements Hash {
       var w1 = data[dataIndex + 6];
       var w0 = data[dataIndex + 7];
       dataIndex += 8;
-      var word = (w7 & 0xff) << 56;
+      var word = (w7 & _MASK_8) << 56;
       word |= (w6 & _MASK_8) << 48;
       word |= (w5 & _MASK_8) << 40;
       word |= (w4 & _MASK_8) << 32;
@@ -243,7 +243,7 @@ abstract class _Hash64Base implements Hash {
     }
   }
 
-  // Convert a 64-bit word to four bytes.
+  // Convert a 64-bit word to eight bytes.
   _wordToBytes(int word) {
     List<int> bytes = new List(_BYTES_PER_WORD_64);
     bytes[0] = (word >> (56)) & _MASK_8;
